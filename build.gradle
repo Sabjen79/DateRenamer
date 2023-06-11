@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+group 'sabjen'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+task customFatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'me.sabjen.daterenamer.Main'
+    }
+    baseName = 'all-in-one-jar'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+    implementation("com.drewnoakes:metadata-extractor:2.18.0")
+}
+
+test {
+    useJUnitPlatform()
+}
+
