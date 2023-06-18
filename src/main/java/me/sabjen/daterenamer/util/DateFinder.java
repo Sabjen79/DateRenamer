@@ -52,7 +52,7 @@ public class DateFinder {
             return new Date(file.lastModified());
         }
 
-        if(date.get() == null) return new Date(file.lastModified());
+        if(date.get() == null || date.get().getTime() < 946684800000L) return new Date(file.lastModified());
         return date.get();
     }
 }
